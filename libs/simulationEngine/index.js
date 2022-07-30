@@ -1,6 +1,6 @@
 const {Army} = require("./troop");
 const {AttackWave} = require("./troopConfig");
-const {getStandardDeviation} = require("./tools");
+const {getStandardDeviation, calculateConfidenceInterval} = require("./tools");
 
 
 class SimulationRun {
@@ -16,21 +16,12 @@ class SimulationRun {
     run() {
         const results = Array.apply(null, Array(this.runConfig.trialsCount))
             .map(() => this.run_one_trial())
-        const winRate = this.#calculateWinRate(results.map(result => result.win ? 1 : 0));
+        const winRate = calculateConfidenceInterval(results.map(result => result.win ? 1 : 0),
+            0, 1);
 
         return {
             winRate
         };
-    }
-
-    #calculateWinRate(arrayWinResults) {
-        const mean = arrayWinResults.reduce((a, b) => a + b) / arrayWinResults.length
-        const std = getStandardDeviation(arrayWinResults)
-        return {
-            mean,
-            lowerBound: mean - 2 * std,
-            upperBound: mean + 2 * std
-        }
     }
 
     run_one_trial() {
@@ -59,8 +50,6 @@ class SimulationRun {
             numberOfRounds
         };
     }
-
-
 }
 
 module.exports = {
