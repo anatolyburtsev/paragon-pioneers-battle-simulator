@@ -1,4 +1,4 @@
-name: CI
+name: Unit tests
 on: push
 jobs:
   build:
@@ -6,6 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install modules
-        run: npm install
+        run: make install-ci
       - name: Run tests
-        run: npm run test
+        run: make test

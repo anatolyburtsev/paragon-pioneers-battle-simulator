@@ -1,15 +1,17 @@
+[![Unit tests](https://github.com/anatolyburtsev/paragon-pioneers-battle-simulator/actions/workflows/100-test.yml/badge.svg)](https://github.com/anatolyburtsev/paragon-pioneers-battle-simulator/actions/workflows/100-test.yml)
+
 ### install dependencies 
 
 ```bash
-npm install
+$ make install
 ```
 
 ### start
 ```bash
-npm start
+$ make run
 ```
 
 ### start with debug logs
 ```bash
-DEBUG=simbat:* npm start
+DEBUG=simbat:* make run
 ```
