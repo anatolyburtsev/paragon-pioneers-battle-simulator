@@ -1,4 +1,5 @@
 const {getStandardDeviation, calculateConfidenceInterval} = require("./tools");
+
 describe("tools should work flawlessly", () => {
     it.each([
         ["shouldn't fail on empty array", []],
@@ -32,8 +33,8 @@ describe("tools should work flawlessly", () => {
     ])('%s', (description, inputArray) => {
         expect(calculateConfidenceInterval(inputArray)).toEqual({
             mean: 42,
-            lowerBound: 42,
-            upperBound: 42
+            std: 0,
+            interval: 0
         });
     })
 

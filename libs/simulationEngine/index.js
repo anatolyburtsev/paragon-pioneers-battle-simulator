@@ -1,11 +1,21 @@
 const {Army} = require("./troop");
 const {AttackWave} = require("./troopConfig");
-const {getStandardDeviation, calculateConfidenceInterval} = require("./tools");
-
+const {calculateConfidenceInterval} = require("./tools");
+const {MAX_ARMY_SIZE} = require("./constants");
 
 class SimulationRun {
     constructor(simulationRunConfig) {
         this.runConfig = simulationRunConfig
+        this.#validateConfig()
+    }
+
+    #validateConfig() {
+        const troopsCount = this.runConfig.playerArmy
+            .map(troopConfig => troopConfig.count)
+            .reduce((a, b) => a + b, 0);
+        if (troopsCount > MAX_ARMY_SIZE) {
+            throw new Error(`Army size exceeds max limit: ${MAX_ARMY_SIZE}`)
+        }
     }
 
     #initArmies() {

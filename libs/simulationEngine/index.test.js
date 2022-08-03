@@ -22,16 +22,10 @@ describe("test simulation run", () => {
         const simRun = new SimulationRun(testSetup);
         const result = simRun.run();
         const meanWinRate = result.winRate.mean;
-        const winRateLowerBound = result.winRate.lowerBound;
-        const winRateUpperBound = result.winRate.upperBound;
-        expect(winRateLowerBound).toBeGreaterThanOrEqual(0);
-        expect(winRateLowerBound).toBeLessThan(meanWinRate);
-
         expect(meanWinRate).toBeLessThan(1);
         expect(meanWinRate).toBeGreaterThan(0);
-
-        expect(winRateUpperBound).toBeLessThanOrEqual(1);
-        expect(winRateUpperBound).toBeGreaterThan(meanWinRate);
+        expect(result.winRate.interval).toBeGreaterThan(0);
+        expect(result.winRate.std).toBeGreaterThan(0);
     })
 
 

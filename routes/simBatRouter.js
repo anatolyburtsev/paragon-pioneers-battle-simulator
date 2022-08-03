@@ -1,5 +1,5 @@
 var express = require('express');
-const {simBatRequestSchema} = require("../model/simBatRequest");
+const {simBatRequestSchema} = require("../model/requestSchemas");
 const {SimulationRun} = require("../libs/simulationEngine");
 var router = express.Router();
 
@@ -10,7 +10,7 @@ const requestValidationOptions = {
     stripUnknown: true // remove unknown props
 };
 
-router.post('/', function (req, res, next) {
+router.post('/singlerun', function (req, res, next) {
     const {error, value} = simBatRequestSchema.validate(req.body, requestValidationOptions);
     if (error) {
         res.sendStatus(400)
