@@ -4,7 +4,6 @@ const {SimulationRun} = require("./index");
 describe("test simulation run", () => {
     it("positive scenario, player has chance to win", () => {
         const testSetup = {
-            id: "abcd-efght-asdfj-asdf",
             trialsCount: 30,
             enemyArmy: [
                 {
