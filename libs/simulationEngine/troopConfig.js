@@ -27,6 +27,7 @@ class TroopConfig {
 
 const TroopConfigs = {
     "Militia": new TroopConfig("Militia", 15, 5, 80, 1, []),
+    "Footsoldier": new TroopConfig("Footsoldier", 40, 15, 80, 8, []),
     "OrcHunter": new TroopConfig("OrcHunter", 10, 20, 60, -1, [Features.Ranged])
 }
 

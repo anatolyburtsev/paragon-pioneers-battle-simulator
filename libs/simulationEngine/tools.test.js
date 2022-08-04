@@ -1,4 +1,8 @@
-const {getStandardDeviation, calculateConfidenceInterval} = require("./tools");
+const {
+    getStandardDeviation,
+    calculateConfidenceInterval,
+    isArrayHasDuplicates, range, cartesian
+} = require("./tools");
 
 describe("tools should work flawlessly", () => {
     it.each([
@@ -41,4 +45,35 @@ describe("tools should work flawlessly", () => {
     it("should shouldn't fail on empty array", () => {
         expect(calculateConfidenceInterval([])).toEqual({})
     })
+
+    it.each([
+        [[1, 2], false],
+        [[1], false],
+        [[], false],
+        [[1, 2, 1], true],
+        [[1, 1, 1], true],
+    ])('duplicate detection function should process array correct: %s, expect: %s', (array, expectedResult) => {
+        const isArrayContainsDuplicates = isArrayHasDuplicates(array);
+        expect(isArrayContainsDuplicates).toEqual(expectedResult)
+    })
+
+    it("should generate a range", () => {
+        const array = range(1, 10, 2);
+        const expectedArray = [1, 3, 5, 7, 9];
+        expect(array).toEqual(expectedArray);
+    })
+
+    it("cartesian should work correct", () => {
+        const cartesianProduct = cartesian([1, 2], ['a', 'b', 'c'])
+        const expectedResult = [
+            [1, 'a'],
+            [1, 'b'],
+            [1, 'c'],
+            [2, 'a'],
+            [2, 'b'],
+            [2, 'c']
+        ];
+        expect(cartesianProduct).toEqual(expectedResult);
+    })
+
 })

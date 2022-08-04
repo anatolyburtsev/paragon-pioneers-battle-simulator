@@ -27,8 +27,20 @@ const calculateConfidenceInterval = (array, lowerBoundCut = null, upperBoundCut 
     }
 }
 
+const isArrayHasDuplicates = (arr) => {
+    return new Set(arr).size !== arr.length
+}
+
+const range = (start, stop, step = 1) => Array.from(
+    {length: (stop - start) / step + 1},
+    (_, i) => start + (i * step));
+
+const cartesian = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
 
 module.exports = {
     getStandardDeviation,
-    calculateConfidenceInterval
+    calculateConfidenceInterval,
+    isArrayHasDuplicates,
+    range,
+    cartesian
 }
