@@ -65,4 +65,19 @@ describe("test army logic", () => {
         ]);
         expect(playerArmy.getCost()).toEqual(2);
     })
+
+    it("should count troops correctly", () => {
+        const playerArmy = new Army([
+            {
+                type: "Militia",
+                count: 2
+            }, {
+                type: "Footsoldier",
+                count: 3
+            }
+        ]);
+        expect(playerArmy.getTroopsCount()).toEqual(5);
+    })
+
+
 })

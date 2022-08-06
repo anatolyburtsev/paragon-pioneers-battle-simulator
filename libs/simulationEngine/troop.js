@@ -125,6 +125,10 @@ class Army {
             .reduce((a, b) => a + b, 0)
     }
 
+    getTroopsCount() {
+        return this.troops.length;
+    }
+
     /**
      *
      * @returns {number} number of dead troops
@@ -148,6 +152,16 @@ class Army {
     }
 }
 
+const getArmyConfigCost = (armyConfig) => {
+    return new Army(armyConfig).getCost();
+}
+
+const getArmyConfigTroopsCount = (armyConfig) => {
+    return armyConfig.map(
+        troopConfig => troopConfig.count
+    ).reduce((a, b) => a + b, 0);
+}
+
 const createUnit = (name) => {
     const config = TroopConfigs[name];
     if (!config) {
@@ -159,5 +173,7 @@ const createUnit = (name) => {
 module.exports = {
     Troop,
     Army,
-    createUnit
+    createUnit,
+    getArmyConfigCost,
+    getArmyConfigTroopsCount
 }

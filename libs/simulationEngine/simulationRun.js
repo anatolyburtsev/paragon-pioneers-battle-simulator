@@ -4,13 +4,13 @@ const {calculateConfidenceInterval} = require("./tools");
 const {MAX_ARMY_SIZE} = require("./constants");
 
 class SimulationRun {
-    constructor(simulationRunConfig) {
-        this.runConfig = simulationRunConfig
+    constructor(simulationConfig) {
+        this.simulationConfig = simulationConfig
         this.#validateConfig()
     }
 
     #validateConfig() {
-        const troopsCount = this.runConfig.playerArmy
+        const troopsCount = this.simulationConfig.playerArmy
             .map(troopConfig => troopConfig.count)
             .reduce((a, b) => a + b, 0);
         if (troopsCount > MAX_ARMY_SIZE) {
@@ -19,18 +19,19 @@ class SimulationRun {
     }
 
     #initArmies() {
-        this.playerArmy = new Army(this.runConfig.playerArmy)
-        this.enemyArmy = new Army(this.runConfig.enemyArmy)
+        this.playerArmy = new Army(this.simulationConfig.playerArmy)
+        this.enemyArmy = new Army(this.simulationConfig.enemyArmy)
     }
 
     run() {
-        const results = Array.apply(null, Array(this.runConfig.trialsCount))
+        const results = Array.apply(null, Array(this.simulationConfig.trialsCount))
             .map(() => this.run_one_trial())
         const winRate = calculateConfidenceInterval(results.map(result => result.win ? 1 : 0),
             0, 1);
         //TODO: calculate other stats
         return {
-            winRate
+            armyConfiguration: this.simulationConfig.playerArmy,
+            winRate: Math.round(100 * winRate.mean)
         };
     }
 

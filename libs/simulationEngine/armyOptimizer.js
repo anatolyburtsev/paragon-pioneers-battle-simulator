@@ -1,6 +1,7 @@
-const {MAX_ARMY_SIZE} = require("./constants");
-const {isArrayHasDuplicates, range, cartesian} = require("./tools");
-const {SimulationRun} = require("./index");
+const {MAX_ARMY_SIZE, MAX_SIMULATIONS_COUNT} = require("./constants");
+const {isArrayHasDuplicates, range, cartesian, pickRandomItem} = require("./tools");
+const {SimulationRun} = require("./simulationRun");
+const {getArmyConfigCost, getArmyConfigTroopsCount} = require("./troop");
 
 
 class ArmyOptimizer {
@@ -37,13 +38,15 @@ class ArmyOptimizer {
             const simulationRun = new SimulationRun(fullSimulationConfig);
             return simulationRun.run();
         })
-        // TODO apply optimization rules here
-        return results;
+
+        const bestResultsWithHighestWinChance = this.#findResultHighestWinChance(results)
+        return [
+            ...bestResultsWithHighestWinChance
+        ];
     }
 
     generateSimulationConfigs() {
         const rawGeneratedConfigs = this.#generateSimulationConfigsRecursive(this.playerArmyStock);
-        // TODO: add hard limit on number of generated configuration if necessary
         return rawGeneratedConfigs.filter(simulationConfig => {
             const troopsCount = simulationConfig
                 .map(troopConfig => troopConfig.count)
@@ -59,19 +62,41 @@ class ArmyOptimizer {
         }
         const reducedArmyStock = armyStock.slice(1);
         const reducedArmyStockConfigs = this.#generateSimulationConfigsRecursive(reducedArmyStock);
+        if (reducedArmyStockConfigs.length * oneDimensionConfigs.length > MAX_SIMULATIONS_COUNT) {
+            throw new Error(`Number of simulations exceeds the threshold: ${MAX_SIMULATIONS_COUNT}`);
+        }
 
         return cartesian(oneDimensionConfigs, reducedArmyStockConfigs)
     }
 
     #generateSingleDimensionSimulationConfigs(troopConfig) {
         const numberOfConfigurations = Math.floor(troopConfig.count / this.reduceFactor);
-        return range(0, numberOfConfigurations).map(idx => ({
+        return range(0, numberOfConfigurations).map(idx => ([{
             type: troopConfig.type,
             count: idx * this.reduceFactor
-        }))
+        }]))
     }
 
-
+    #findResultHighestWinChance(results) {
+        const maxWinChance = Math.max(...results.map(result => result.winRate));
+        const resultsWithMaxWinChance = results.filter(result => result.winRate === maxWinChance);
+        const smallestArmySize = Math.min(...resultsWithMaxWinChance
+            .map(result => getArmyConfigTroopsCount(result.armyConfiguration)))
+        const resultsWithSmallestArmySize = resultsWithMaxWinChance
+            .filter(result => getArmyConfigTroopsCount(result.armyConfiguration) === smallestArmySize);
+        return [
+            {
+                "name": "maxWinChanceRandomSetup",
+                "winChance": maxWinChance,
+                "army": pickRandomItem(resultsWithMaxWinChance).armyConfiguration
+            },
+            {
+                "name": "maxWinChanceSmallestArmy",
+                "winChance": maxWinChance,
+                "army": pickRandomItem(resultsWithSmallestArmySize).armyConfiguration
+            },
+        ];
+    }
 }
 
 module.exports = {

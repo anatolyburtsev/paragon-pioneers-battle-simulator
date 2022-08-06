@@ -37,10 +37,15 @@ const range = (start, stop, step = 1) => Array.from(
 
 const cartesian = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
 
+const pickRandomItem = (array) => {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
 module.exports = {
     getStandardDeviation,
     calculateConfidenceInterval,
     isArrayHasDuplicates,
     range,
-    cartesian
+    cartesian,
+    pickRandomItem
 }

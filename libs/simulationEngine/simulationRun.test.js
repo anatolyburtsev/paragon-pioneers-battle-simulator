@@ -20,11 +20,9 @@ describe("test simulation run", () => {
         }
         const simRun = new SimulationRun(testSetup);
         const result = simRun.run();
-        const meanWinRate = result.winRate.mean;
-        expect(meanWinRate).toBeLessThan(1);
+        const meanWinRate = result.winRate;
+        expect(meanWinRate).toBeLessThan(100);
         expect(meanWinRate).toBeGreaterThan(0);
-        expect(result.winRate.interval).toBeGreaterThan(0);
-        expect(result.winRate.std).toBeGreaterThan(0);
     })
 
 
@@ -47,6 +45,6 @@ describe("test simulation run", () => {
         }
         const simRun = new SimulationRun(testSetup);
         const result = simRun.run();
-        expect(result.winRate.mean).toBeGreaterThanOrEqual(0.8)
+        expect(result.winRate).toBeGreaterThanOrEqual(80)
     })
 })

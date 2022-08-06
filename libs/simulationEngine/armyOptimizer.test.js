@@ -1,4 +1,5 @@
 const {ArmyOptimizer} = require("./armyOptimizer");
+const {getArmyConfigTroopsCount} = require("./troop");
 
 
 describe("army optimizer logic test", () => {
@@ -63,7 +64,14 @@ describe("army optimizer logic test", () => {
         }
 
         const armyOptimizer = new ArmyOptimizer(config);
-        console.dir(armyOptimizer.run())
-    })
+        const optimizationResults = armyOptimizer.run();
+        const resultMaxWinChance = optimizationResults.filter(result => result.name === "maxWinChanceRandomSetup")
+        expect(resultMaxWinChance).toHaveLength(1);
+        expect(resultMaxWinChance[0].winChance).toEqual(100);
 
+        const resultMinArmySize = optimizationResults.filter(result => result.name === "maxWinChanceSmallestArmy")
+        expect(resultMinArmySize).toHaveLength(1);
+        expect(resultMaxWinChance[0].winChance).toEqual(100);
+        expect(getArmyConfigTroopsCount(resultMaxWinChance[0].army)).toEqual(60);
+    })
 })
