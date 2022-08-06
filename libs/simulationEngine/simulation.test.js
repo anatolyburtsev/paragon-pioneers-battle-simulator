@@ -1,4 +1,4 @@
-const {SimulationRun} = require("./index");
+const {Simulation} = require("./index");
 
 
 describe("test simulation run", () => {
@@ -18,7 +18,7 @@ describe("test simulation run", () => {
                 }
             ]
         }
-        const simRun = new SimulationRun(testSetup);
+        const simRun = new Simulation(testSetup);
         const result = simRun.run();
         const meanWinRate = result.winRate;
         expect(meanWinRate).toBeLessThan(100);
@@ -43,7 +43,7 @@ describe("test simulation run", () => {
                 }
             ]
         }
-        const simRun = new SimulationRun(testSetup);
+        const simRun = new Simulation(testSetup);
         const result = simRun.run();
         expect(result.winRate).toBeGreaterThanOrEqual(80)
     })

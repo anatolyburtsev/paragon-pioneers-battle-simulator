@@ -1,9 +1,9 @@
-const {Army} = require("./troop");
-const {AttackWave} = require("./troopConfig");
 const {calculateConfidenceInterval} = require("./tools");
-const {MAX_ARMY_SIZE} = require("./constants");
+const {AttackWave} = require("../gameLogic/troopConfig");
+const {MAX_ARMY_SIZE} = require("../gameLogic/constants");
+const {Army} = require("../gameLogic/army");
 
-class SimulationRun {
+class Simulation {
     constructor(simulationConfig) {
         this.simulationConfig = simulationConfig
         this.#validateConfig()
@@ -25,7 +25,7 @@ class SimulationRun {
 
     run() {
         const results = Array.apply(null, Array(this.simulationConfig.trialsCount))
-            .map(() => this.run_one_trial())
+            .map(() => this.#run_one_trial())
         const winRate = calculateConfidenceInterval(results.map(result => result.win ? 1 : 0),
             0, 1);
         //TODO: calculate other stats
@@ -35,7 +35,7 @@ class SimulationRun {
         };
     }
 
-    run_one_trial() {
+    #run_one_trial() {
         this.#initArmies();
         const playerArmyCost = this.playerArmy.getCost()
         const playerArmySize = this.playerArmy.troops.length;
@@ -64,5 +64,5 @@ class SimulationRun {
 }
 
 module.exports = {
-    SimulationRun
+    Simulation
 }

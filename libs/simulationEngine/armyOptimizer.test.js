@@ -1,5 +1,5 @@
 const {ArmyOptimizer} = require("./armyOptimizer");
-const {getArmyConfigTroopsCount} = require("./troop");
+const {getArmyConfigTroopsCount} = require("../gameLogic");
 
 
 describe("army optimizer logic test", () => {

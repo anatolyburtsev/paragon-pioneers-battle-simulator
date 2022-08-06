@@ -1,8 +1,7 @@
-const {MAX_ARMY_SIZE, MAX_SIMULATIONS_COUNT} = require("./constants");
 const {isArrayHasDuplicates, range, cartesian, pickRandomItem} = require("./tools");
-const {SimulationRun} = require("./simulationRun");
-const {getArmyConfigCost, getArmyConfigTroopsCount} = require("./troop");
-
+const {Simulation} = require("./simulation");
+const {MAX_ARMY_SIZE, MAX_SIMULATIONS_COUNT} = require("../gameLogic/constants");
+const {getArmyConfigTroopsCount} = require("../gameLogic");
 
 class ArmyOptimizer {
     constructor(optimizerConfig) {
@@ -35,7 +34,7 @@ class ArmyOptimizer {
                 trialsCount: this.trialsCount,
                 enemyArmy: this.enemyArmy
             }
-            const simulationRun = new SimulationRun(fullSimulationConfig);
+            const simulationRun = new Simulation(fullSimulationConfig);
             return simulationRun.run();
         })
 

@@ -1,7 +1,7 @@
-const {SimulationRun} = require("./simulationRun");
+const {Simulation} = require("./simulation");
 const {ArmyOptimizer} = require("./armyOptimizer");
 
 module.exports = {
-    SimulationRun,
+    Simulation,
     ArmyOptimizer
 }
