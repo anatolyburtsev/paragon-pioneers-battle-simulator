@@ -38,8 +38,8 @@ class Simulation {
     #run_one_trial() {
         this.#initArmies();
         const playerArmyCost = this.playerArmy.getCost()
-        const playerArmySize = this.playerArmy.troops.length;
-        const enemyArmySize = this.enemyArmy.troops.length;
+        const playerArmySize = this.playerArmy.getTroopsCount();
+        const enemyArmySize = this.enemyArmy.getTroopsCount();
 
         let numberOfRounds = 0
         while (!this.playerArmy.isEmpty() && !this.enemyArmy.isEmpty()) {
@@ -56,8 +56,8 @@ class Simulation {
             win: this.enemyArmy.isEmpty(),
             costLoss: playerArmyCost - this.playerArmy.getCost(),
             playerArmySize,
-            playerTroopsLoss: playerArmySize - this.playerArmy.troops.length,
-            enemyTroopsLoss: enemyArmySize - this.enemyArmy.troops.length,
+            playerTroopsLoss: playerArmySize - this.playerArmy.getTroopsCount(),
+            enemyTroopsLoss: enemyArmySize - this.enemyArmy.getTroopsCount(),
             numberOfRounds
         };
     }
