@@ -1,6 +1,6 @@
 var express = require('express');
 const {singleRunRequestSchema, optimizerRunRequestSchema} = require("../model/requestSchemas");
-const {SimulationRun, ArmyOptimizer} = require("../libs/simulationEngine");
+const {Simulation, ArmyOptimizer} = require("../libs/simulationEngine");
 var router = express.Router();
 
 // schema options
@@ -16,7 +16,7 @@ router.post('/singlerun', function (req, res, next) {
         res.sendStatus(400)
         return
     }
-    const simRun = new SimulationRun(value);
+    const simRun = new Simulation(value);
     const result = simRun.run()
     res.json(result);
 });

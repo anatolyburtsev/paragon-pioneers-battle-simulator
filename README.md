@@ -15,3 +15,6 @@ $ make run
 ```bash
 DEBUG=simbat:* make run
 ```
+
+### send request
+there is a postman collection in ``postman`` folder. Can be used to send requests to locally run server

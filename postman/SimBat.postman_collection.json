@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "96332c70-2f87-43aa-aeff-35bbe1265c33",
+		"name": "SimBat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "single run",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"trialsCount\": 30,\n            \"enemyArmy\": [\n        {\n                    \"type\": \"OrcHunter\",\n                    \"count\": 10\n        }\n    ],\n            \"playerArmy\": [\n        {\n                    \"type\": \"Militia\",\n                    \"count\": 14\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/battle/singlerun/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"battle",
+						"singlerun",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "optimize",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"trialsCount\": 30,\n    \"reduceFactor\": 10,\n    \"playerArmyMaxSize\": 150,\n            \"enemyArmy\": [\n        {\n                    \"type\": \"AgukTheDestroyer\",\n                    \"count\": 1\n        }\n    ],\n            \"playerArmyStock\": [\n        {\n                    \"type\": \"LongbowArcher\",\n                    \"count\": 100\n        },\n        {\n                    \"type\": \"Knight\",\n                    \"count\": 100\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/battle/armyoptimizer/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"battle",
+						"armyoptimizer",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
