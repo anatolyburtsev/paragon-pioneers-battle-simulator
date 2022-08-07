@@ -20,9 +20,12 @@ describe("test simulation run", () => {
         }
         const simRun = new Simulation(testSetup);
         const result = simRun.run();
-        const meanWinRate = result.winRate;
-        expect(meanWinRate).toBeLessThan(100);
-        expect(meanWinRate).toBeGreaterThan(0);
+        const meanWinChance = result.winChance;
+        expect(meanWinChance).toBeLessThan(100);
+        expect(meanWinChance).toBeGreaterThan(0);
+
+        expect(result.armyConfiguration).toEqual(testSetup.playerArmy);
+        expect(result.armyCost).toEqual(13);
     })
 
 
@@ -45,6 +48,6 @@ describe("test simulation run", () => {
         }
         const simRun = new Simulation(testSetup);
         const result = simRun.run();
-        expect(result.winRate).toBeGreaterThanOrEqual(80)
+        expect(result.winChance).toBeGreaterThanOrEqual(80)
     })
 })

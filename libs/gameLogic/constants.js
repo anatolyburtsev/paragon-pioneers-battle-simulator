@@ -1,8 +1,5 @@
 const MAX_ARMY_SIZE = 150
 
-const MAX_SIMULATIONS_COUNT = 1000;
-
 module.exports = {
     MAX_ARMY_SIZE,
-    MAX_SIMULATIONS_COUNT
 }

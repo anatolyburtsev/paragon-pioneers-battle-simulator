@@ -2,6 +2,7 @@ const {calculateConfidenceInterval} = require("./tools");
 const {AttackWave} = require("../gameLogic/troopConfig");
 const {MAX_ARMY_SIZE} = require("../gameLogic/constants");
 const {Army} = require("../gameLogic/army");
+const {getArmyConfigCost} = require("../gameLogic");
 
 class Simulation {
     constructor(simulationConfig) {
@@ -26,12 +27,13 @@ class Simulation {
     run() {
         const results = Array.apply(null, Array(this.simulationConfig.trialsCount))
             .map(() => this.#run_one_trial())
-        const winRate = calculateConfidenceInterval(results.map(result => result.win ? 1 : 0),
+        const winChance = calculateConfidenceInterval(results.map(result => result.win ? 1 : 0),
             0, 1);
         //TODO: calculate other stats
         return {
             armyConfiguration: this.simulationConfig.playerArmy,
-            winRate: Math.round(100 * winRate.mean)
+            armyCost: getArmyConfigCost(this.simulationConfig.playerArmy),
+            winChance: Math.round(100 * winChance.mean)
         };
     }
 

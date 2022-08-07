@@ -38,6 +38,9 @@ const range = (start, stop, step = 1) => Array.from(
 const cartesian = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
 
 const pickRandomItem = (array) => {
+    if (array === undefined || array.length === 0) {
+        return null
+    }
     return array[Math.floor(Math.random() * array.length)]
 }
 

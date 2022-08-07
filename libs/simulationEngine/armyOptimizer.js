@@ -1,7 +1,7 @@
 const {isArrayHasDuplicates, range, cartesian, pickRandomItem} = require("./tools");
 const {Simulation} = require("./simulation");
 const {MAX_ARMY_SIZE, MAX_SIMULATIONS_COUNT} = require("../gameLogic/constants");
-const {getArmyConfigTroopsCount} = require("../gameLogic");
+const {getArmyConfigTroopsCount, getArmyConfigCost} = require("../gameLogic");
 
 class ArmyOptimizer {
     constructor(optimizerConfig) {
@@ -10,6 +10,7 @@ class ArmyOptimizer {
         this.enemyArmy = optimizerConfig.enemyArmy;
         this.playerArmyMaxSize = optimizerConfig.playerArmyMaxSize;
         this.playerArmyStock = optimizerConfig.playerArmyStock;
+        this.minAcceptableWinChance = optimizerConfig.minAcceptableWinChance;
 
         this.#validateConfig()
     }
@@ -38,9 +39,15 @@ class ArmyOptimizer {
             return simulationRun.run();
         })
 
-        const bestResultsWithHighestWinChance = this.#findResultHighestWinChance(results)
+        const maxWinChance = Math.max(...results.map(result => result.winChance));
+        const bestResultsWithHighestWinChance = this.#findResultHighestWinChance(results,
+            maxWinChance,
+            "maxWinChance")
+        const bestResultsAcceptableWinChance = this.#findResultHighestWinChance(results,
+            this.minAcceptableWinChance, "minAcceptableWinChance")
         return [
-            ...bestResultsWithHighestWinChance
+            ...bestResultsWithHighestWinChance,
+            ...bestResultsAcceptableWinChance
         ];
     }
 
@@ -76,24 +83,44 @@ class ArmyOptimizer {
         }]))
     }
 
-    #findResultHighestWinChance(results) {
-        const maxWinChance = Math.max(...results.map(result => result.winRate));
-        const resultsWithMaxWinChance = results.filter(result => result.winRate === maxWinChance);
-        const smallestArmySize = Math.min(...resultsWithMaxWinChance
+    #findResultHighestWinChance(results, minAcceptableWinChance, prefix) {
+        const acceptableResults = results
+            .filter(result => result.winChance >= minAcceptableWinChance);
+        const randomAcceptableResult = pickRandomItem(acceptableResults);
+        const randomAcceptableResponse = !randomAcceptableResult ? {} :
+            {
+                "name": `${prefix}RandomSetup`,
+                "winChance": randomAcceptableResult.winChance,
+                "army": randomAcceptableResult.armyConfiguration
+            };
+
+        const smallestArmySize = Math.min(...acceptableResults
             .map(result => getArmyConfigTroopsCount(result.armyConfiguration)))
-        const resultsWithSmallestArmySize = resultsWithMaxWinChance
+        const resultsWithSmallestArmySize = acceptableResults
             .filter(result => getArmyConfigTroopsCount(result.armyConfiguration) === smallestArmySize);
+        const randomSmallestArmyResult = pickRandomItem(resultsWithSmallestArmySize);
+        const smallestArmyResponse = !randomSmallestArmyResult ? {} :
+            {
+                "name": `${prefix}SmallestArmy`,
+                "winChance": randomSmallestArmyResult.winChance,
+                "army": randomSmallestArmyResult.armyConfiguration
+            };
+
+        const cheapestArmyCost = Math.min(...acceptableResults
+            .map(result => result.armyCost));
+        const resultsWithCheapestCost = acceptableResults
+            .filter(result => result.armyCost === cheapestArmyCost);
+        const randomCheapestArmyResult = pickRandomItem(resultsWithCheapestCost);
+        const cheapestArmyResponse = !randomCheapestArmyResult ? {} : {
+            "name": `${prefix}CheapestArmy`,
+            "winChance": randomCheapestArmyResult.winChance,
+            "army": randomCheapestArmyResult.armyConfiguration
+        };
+
         return [
-            {
-                "name": "maxWinChanceRandomSetup",
-                "winChance": maxWinChance,
-                "army": pickRandomItem(resultsWithMaxWinChance).armyConfiguration
-            },
-            {
-                "name": "maxWinChanceSmallestArmy",
-                "winChance": maxWinChance,
-                "army": pickRandomItem(resultsWithSmallestArmySize).armyConfiguration
-            },
+            randomAcceptableResponse,
+            smallestArmyResponse,
+            cheapestArmyResponse
         ];
     }
 }
