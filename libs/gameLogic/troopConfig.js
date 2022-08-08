@@ -29,10 +29,8 @@ const TroopConfigs = {
     "Militia": new TroopConfig("Militia", 15, 5, 80, 1, []),
     "Archer": new TroopConfig("Archer", 10, 20, 80, 8, [Features.Ranged]),
     "Footsoldier": new TroopConfig("Footsoldier", 40, 15, 80, 8, []),
-    // clarify cost
-    "Cavalry": new TroopConfig("Cavalry", 5, 5, 80, 8, [Features.Flanking, Features.FirstStrike]),
+    "Cavalry": new TroopConfig("Cavalry", 5, 5, 80, 16, [Features.Flanking, Features.FirstStrike]),
     "LongbowArcher": new TroopConfig("LongbowArcher", 10, 15, 80, 32, [Features.Ranged, Features.DoubleStrike]),
-    // clarify cost
     "Knight": new TroopConfig("Knight", 90, 20, 80, 64, []),
     // clarify cost
     "Crossbowman": new TroopConfig("Crossbowman", 15, 90, 80, 64, [Features.Ranged]),
