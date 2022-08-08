@@ -32,5 +32,9 @@ router.post('/armyoptimizer', function (req, res, next) {
     res.json(result);
 });
 
+router.get("/healthcheck", function(req, res, nesxt) {
+    res.json({"status": "ok"}).status(200);
+})
+
 
 module.exports = router;
