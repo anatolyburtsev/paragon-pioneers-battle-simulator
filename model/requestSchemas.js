@@ -4,7 +4,7 @@ const Joi = require('joi');
 const armySchema = Joi.array().items(
     Joi.object({
         type: Joi.string().required(),
-        count: Joi.number().min(1).max(150).required()
+        count: Joi.number().min(0).max(150).required()
     }).required());
 
 const singleRunRequestSchema = Joi.object({

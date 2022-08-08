@@ -36,13 +36,43 @@
 			"response": []
 		},
 		{
+			"name": "healthcheck",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"trialsCount\": 30,\n            \"enemyArmy\": [\n        {\n                    \"type\": \"OrcHunter\",\n                    \"count\": 10\n        }\n    ],\n            \"playerArmy\": [\n        {\n                    \"type\": \"Militia\",\n                    \"count\": 14\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/battle/singlerun/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"battle",
+						"singlerun",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "optimize",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"trialsCount\": 30,\n    \"reduceFactor\": 10,\n    \"playerArmyMaxSize\": 150,\n            \"enemyArmy\": [\n        {\n                    \"type\": \"AgukTheDestroyer\",\n                    \"count\": 1\n        }\n    ],\n            \"playerArmyStock\": [\n        {\n                    \"type\": \"LongbowArcher\",\n                    \"count\": 100\n        },\n        {\n                    \"type\": \"Knight\",\n                    \"count\": 100\n        }\n    ]\n}",
+					"raw": "{\n    \"trialsCount\": 30,\n    \"reduceFactor\": 10,\n    \"playerArmyMaxSize\": 150,\n            \"enemyArmy\": [\n        {\"type\": \"OrcHunter\", \"count\": 71},\n        {\"type\": \"OrcRaiders\", \"count\": 0},\n        {\"type\": \"OrcVeteran\", \"count\": 0},\n        {\"type\": \"WargRider\", \"count\": 0},\n        {\"type\": \"EliteOrcHunters\", \"count\": 0},\n        {\"type\": \"OrcVanguard\", \"count\": 0},\n        {\"type\": \"EliteOrcSniper\", \"count\": 0},\n        {\"type\": \"OrcDemolisher\", \"count\": 0},\n        {\"type\": \"BulaTheBully\", \"count\": 0},\n        {\"type\": \"AgukTheDestroyer\", \"count\": 0},\n        {\"type\": \"MazogaTheIndestructible\", \"count\": 0},\n        {\"type\": \"DurgashTheDevastator\", \"count\": 0}\n    ],\n            \"playerArmyStock\": [\n        {\"type\": \"Militia\", \"count\": 10},\n        {\"type\": \"Archer\", \"count\": 10},\n        {\"type\": \"Footsoldier\", \"count\": 10},\n        {\"type\": \"Cavalry\", \"count\": 10},\n        {\"type\": \"LongbowArcher\", \"count\": 10},\n        {\"type\": \"Knight\", \"count\": 10},\n        {\"type\": \"Crossbowman\", \"count\": 10},\n        {\"type\": \"Cuirassier\", \"count\": 10},\n        {\"type\": \"Cannoneer\", \"count\": 10}\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
