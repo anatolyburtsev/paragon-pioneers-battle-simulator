@@ -35,7 +35,7 @@ class Troop {
         if (this.features.has(Features.Trample)) {
             let remaining_hit_power = hit_power
             while (remaining_hit_power > 0) {
-                const consumed_hit_power = this.#hit(hit_power, enemy_army)
+                const consumed_hit_power = this.#hit(remaining_hit_power, enemy_army)
                 if (consumed_hit_power <= 0) {
                     break
                 }
@@ -44,6 +44,7 @@ class Troop {
         } else {
             this.#hit(hit_power, enemy_army)
         }
+        return hit_power
     }
 
     isAlive() {

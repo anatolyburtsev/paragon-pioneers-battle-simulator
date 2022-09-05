@@ -46,9 +46,9 @@ class Simulation {
         let numberOfRounds = 0
         while (!this.playerArmy.isEmpty() && !this.enemyArmy.isEmpty()) {
             for (const wave of [AttackWave.FirstWave, AttackWave.MiddleWave, AttackWave.LastWave]) {
-                this.playerArmy.attack(this.enemyArmy, wave)
-                this.enemyArmy.attack(this.playerArmy, wave)
-                this.playerArmy.cleanDead()
+                const playerHit = this.playerArmy.attack(this.enemyArmy, wave)
+                const enemyHit = this.enemyArmy.attack(this.playerArmy, wave)
+                const playerLoss = this.playerArmy.cleanDead()
                 this.enemyArmy.cleanDead()
             }
             numberOfRounds += 1

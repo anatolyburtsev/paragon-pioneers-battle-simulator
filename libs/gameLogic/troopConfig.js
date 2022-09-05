@@ -47,6 +47,7 @@ const TroopConfigs = {
     "EliteOrcHunters": new TroopConfig("EliteOrcHunters", 10, 15, 60, -1, [Features.Ranged, Features.DoubleStrike]),
     "OrcVanguard": new TroopConfig("OrcVanguard", 120, 10, 60, -1, [Features.FirstStrike]),
     "EliteOrcSniper": new TroopConfig("EliteOrcSniper", 15, 90, 60, [Features.Ranged]),
+    // clarify cost
     "OrcDemolisher": new TroopConfig("OrcDemolisher", 60, 80, 60, -1, [Features.LastStrike, Features.Trample]),
 
     "BulaTheBully": new TroopConfig("BulaTheBully", 5000, 150, 50, -1, [Features.LastStrike, Features.Trample]),

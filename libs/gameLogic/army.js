@@ -48,14 +48,16 @@ class Army {
     }
 
     attack(enemy_army, attack_wave) {
+        let total_hit_power = 0
         if (enemy_army.isEmpty()) {
             return
         }
         for (const troop of this.troops) {
             if (troop.attackOrder.includes(attack_wave)) {
-                troop.attack(enemy_army)
+                total_hit_power += troop.attack(enemy_army)
             }
         }
+        return total_hit_power;
     }
 }
 

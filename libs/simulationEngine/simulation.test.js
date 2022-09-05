@@ -50,4 +50,30 @@ describe("test simulation run", () => {
         const result = simRun.run();
         expect(result.winChance).toBeGreaterThanOrEqual(70)
     })
+
+    it("positive test case to confirm bug fix", () => {
+        const testSetup = {
+            id: "abcd-efght-asdfj-asdf",
+            trialsCount: 1,
+            enemyArmy: [
+                {
+                    type: "MazogaTheIndestructible",
+                    count: 1
+                }
+            ],
+            playerArmy: [
+                {
+                    type: "Knight",
+                    count: 100
+                },
+                {
+                    type: "LongbowArcher",
+                    count: 40
+                }
+            ]
+        }
+        const simRun = new Simulation(testSetup);
+        const result = simRun.run();
+        expect(result.winChance).toBe(100)
+    })
 })
